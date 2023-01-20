@@ -1,0 +1,38 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #424342;
+}
+
+a {
+  color: #00B7FF;
+}
+
+
+#events{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#event{
+  display: flex;
+  flex-direction: column;
+  background-color: #626267;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
+}
+
+#buttons{
+  display: flex;
+  justify-content: space-Around
+}
+
+.btn{
+  background-color: #90A8C3;
+  color: white;
+  border-radius: 10px;
+  padding: 5px;
+  margin: 5px;
+}
