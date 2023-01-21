@@ -4,8 +4,7 @@ var router = express.Router()
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  const q = query(collection(global.db, 'events'), where('isVerified', '==', 0))
-  getDocs(q).then((querySnapshot) => {
+  getDocs(collection(global.db, 'events')).then((querySnapshot) => {
     var dataEvents = []
     querySnapshot.forEach((doc) => {
       dataEvents.push({

@@ -24,14 +24,15 @@ document.querySelectorAll('#accept').forEach((item) => {
 
 document.querySelectorAll('#delete').forEach((item) => {
   item.addEventListener('click', () => {
-    console.log('delete' + item.value)
     fetch('/api/delete', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        id: item.value,
+        // get the attribute "data-button" of item
+        id: item.getAttributeNode('eventId').value,
+        place : item.getAttributeNode('placeName').value,
       }),
     })
       .then((response) => {

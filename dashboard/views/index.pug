@@ -1,24 +1,26 @@
 extends layout
 
 block content
-  h1 Dashboard
-  h2 Events
+  h1 Events
   #events
     // Display all events from the querySnapshot "events"
     each event in events
       #event
-        h1= event["data"]['title']
-        h2= event["id"]
+        h2= event["data"]['title']
+        h3= event["id"]
         p= event["data"]['description']
         p= event["data"]['image']
         p= event["data"]['date'] + " - " +  event["data"]['time']
         p= event["data"]['place'] + " : " + "[lattitude : " + event["data"]['latitude'] + ", longitude : " + event["data"]['longitude'] + "]"
         #buttons
-          button.btn(type="button" id="accept" value=event["id"]) Accept
-          button.btn(type="button" id="delete" value=event["id"]) Delete
+          if event["data"]['isVerified'] ==0
+            button.btn(type="button" id="accept" value=event["id"]) 
+              span Accept
+          button.btn(type="button" id="delete" eventId = event["id"]  placeName=event["data"]['place']) 
+            span Delete
   #place
-    h2 Places
-    input(type="text" id="placeInput" placeholder="Chez nono")
+    h1 Places
+    input(type="text" id="placeInput" class = "textInput" placeholder="Chez nono")
     button.btn(id="generatePlaces") Valid
     #places
     

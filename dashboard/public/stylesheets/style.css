@@ -1,7 +1,14 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-color: #424342;
+  background-color: #000000;
+  color : #cdcdcd;
+}
+
+h1{
+  color : white;
+  font-family: 'Verdana';
+  font-size: 30px;
 }
 
 a {
@@ -11,14 +18,14 @@ a {
 
 #events{
   display: flex;
-  align-items: center;
-  justify-content: center;
+  justify-content: start;
+  flex-wrap: wrap;
 }
 
 #event{
   display: flex;
   flex-direction: column;
-  background-color: #626267;
+  background-color: #1a1a1a;
   border-radius: 10px;
   padding: 10px;
   margin: 10px;
@@ -29,10 +36,47 @@ a {
   justify-content: space-Around
 }
 
-.btn{
-  background-color: #90A8C3;
-  color: white;
+
+.textInput {
+	border: none;
+  color : white;
+	border-bottom: 2px solid #90A8C3;
+	background: none;
+	padding: 10px;
+	padding-left: 24px;
+	font-weight: 700;
+	transition: .2s;
+}
+
+.btn {
+  width: 130px;
+  height: 40px;
+  color: black;
+  border-radius: 5px;
+  padding: 10px 25px;
+  font-family: 'Lato', sans-serif;
+  font-weight: bold;
+  background: #f5d659;
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+  outline: none;
+  margin : 10px;
+  font-size: 15px;
+}
+
+#places{
+  display: flex;
+  justify-content: start;
+  flex-wrap: wrap;
+}
+
+.p{
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  background-color: #1a1a1a;
   border-radius: 10px;
-  padding: 5px;
-  margin: 5px;
+  padding: 10px;
+  margin: 10px;
 }

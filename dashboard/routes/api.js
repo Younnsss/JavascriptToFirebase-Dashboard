@@ -8,8 +8,8 @@ const {
   doc,
   updateDoc,
   deleteDoc,
+  FieldValue,
 } = require('firebase/firestore')
-const { initializeApp } = require('firebase/app')
 
 var router = express.Router()
 
@@ -41,7 +41,17 @@ router.post('/accept', function (req, res, next) {
 })
 
 router.post('/delete', async function (req, res, next) {
-  const docu = doc(db, 'events', req.body['id'])
+  const docu = doc(global.db, 'events', req.body['id'])
+  const q = query(collection(global.db, "places"), where("title", "==", req.body['place']));
+  getDocs(q).then((querySnapshot) => {
+    querySnapshot.forEach((document) => {
+      let events = Array.from(document.data()["events"].map(str => str.toString()));
+      const docu2 = doc(db, 'places', document.id);
+      updateDoc(docu2, {
+        events: events.filter((item) => item !== req.body['id']),
+      })
+    })
+  })  
   deleteDoc(docu)
     .then(function () {
       res.send({ response: 'OK' })
@@ -49,6 +59,8 @@ router.post('/delete', async function (req, res, next) {
     .catch(function (error) {
       next
     })
+  console.log(req.body['id'])
+  console.log(req.body['place'])
 })
 
 router.post('/valid', function (req, res, next) {
@@ -56,11 +68,11 @@ router.post('/valid', function (req, res, next) {
   for (let place of dataPlaces)
     if (place['data'].toLowerCase().includes(req.body['id'].toLowerCase()))
       p +=
-        "<div class = 'p'> <h1>" +
+        "<div class = 'p'> <h2>" +
         place['data'] +
-        '</h1> <h2> ' +
+        '</h2> <h3> ' +
         place['id'] +
-        ' </h2> </div>'
+        ' </h3> </div>'
   res.send({ response: p })
 })
 
