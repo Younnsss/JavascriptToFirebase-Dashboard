@@ -1,9 +1,11 @@
 var express = require('express')
 const { collection, query, where, getDocs } = require('firebase/firestore')
 var router = express.Router()
+const { signin} = require('../controller/userController')
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
+router.get('/index', function (req, res, next) {
+
   getDocs(collection(global.db, 'events')).then((querySnapshot) => {
     var dataEvents = []
     querySnapshot.forEach((doc) => {
@@ -12,8 +14,23 @@ router.get('/', function (req, res, next) {
         data: doc.data(),
       })
     })
-    res.render('index', { events: dataEvents })
+    getDocs(collection(global.db, 'modifs')).then((querySnapshot2) => {
+      var modifsEvents = []
+      querySnapshot2.forEach((doc2) => {
+        modifsEvents.push({
+          id: doc2.id,
+          data: doc2.data(),
+        })
+      })
+      res.render('index', { events: dataEvents, modifs: modifsEvents })
+    })
   })
 })
+
+router.get('/', function (req, res, next) {
+  res.render('login')
+})
+
+router.post('/signin', signin)
 
 module.exports = router

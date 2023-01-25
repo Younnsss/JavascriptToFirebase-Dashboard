@@ -40,6 +40,40 @@ router.post('/accept', function (req, res, next) {
     })
 })
 
+router.post('/deleteModif', function (req, res, next) {
+  const docu = doc(db, 'modifs', req.body['id'])
+  deleteDoc(docu)
+    .then(function () {
+      res.send({ response: 'OK' })
+    })
+    .catch(function (error) {
+      next
+    })
+})
+
+router.post('/acceptModif', async function (req, res, next) {
+  const q = query(collection(global.db, "places"), where("title", "==", req.body['place']));
+  getDocs(q).then((querySnapshot) => {
+    querySnapshot.forEach((document) => {
+      const docu2 = doc(db, 'places', document.id);
+      if(req.body["modif"] == "le titre"){
+        updateDoc(docu2, {
+          title: req.body['newData'],
+        })
+      } else if(req.body["modif"] == "l'adresse"){
+        updateDoc(docu2, {
+          adress: req.body['newData'],
+        })
+      }else if(req.body["modif"] == "les horaires"){
+        updateDoc(docu2, {
+          schedule: req.body['newData'].substring(2, req.body['newData'].length - 2).split('","'),
+        })
+      }
+      // let events = Array.from(document.data()["events"].map(str => str.toString()));
+    })
+  })
+})
+
 router.post('/delete', async function (req, res, next) {
   const docu = doc(global.db, 'events', req.body['id'])
   const q = query(collection(global.db, "places"), where("title", "==", req.body['place']));

@@ -1,28 +1,56 @@
 extends layout
 
 block content
+  #title 
+    h1 Dashboard
   h1 Events
   #events
-    // Display all events from the querySnapshot "events"
-    each event in events
-      #event
-        h2= event["data"]['title']
-        h3= event["id"]
-        p= event["data"]['description']
-        p= event["data"]['image']
-        p= event["data"]['date'] + " - " +  event["data"]['time']
-        p= event["data"]['place'] + " : " + "[lattitude : " + event["data"]['latitude'] + ", longitude : " + event["data"]['longitude'] + "]"
-        #buttons
-          if event["data"]['isVerified'] ==0
-            button.btn(type="button" id="accept" value=event["id"]) 
+    if events.length == 0
+      h2 Aucun événement pour l'instant
+    else
+      each event in events
+        #event
+          h2= event["data"]['title']
+          h3= event["id"]
+          p= event["data"]['description']
+          p= event["data"]['image']
+          p= event["data"]['date'] + " - " +  event["data"]['time']
+          p= event["data"]['place'] + " : " + "[lattitude : " + event["data"]['latitude'] + ", longitude : " + event["data"]['longitude'] + "]"
+          #buttons
+            if event["data"]['isVerified'] ==0
+              button.btn(type="button" id="accept" value=event["id"]) 
+                span Accept
+            button.btn(type="button" id="delete" eventId = event["id"]  placeName=event["data"]['place']) 
+              span Delete
+  h1 Modifs
+  #modifs
+    if modifs.length == 0
+      h2 Aucune modification pour l'instant
+    else
+      each modif in modifs
+        #modif
+          h2= modif["data"]["place"]
+          if modif["data"]["modifying"] == "les horaires"
+            p= "mon : " + modif["data"]["actualData"][0] + " ==> " + modif["data"]["newData"][0]
+            p= "tue : " + modif["data"]["actualData"][1] + " ==> " + modif["data"]["newData"][1]
+            p= "wed : " + modif["data"]["actualData"][2] + " ==> " + modif["data"]["newData"][2]
+            p= "thu : " + modif["data"]["actualData"][3] + " ==> " + modif["data"]["newData"][3]
+            p= "fri : " + modif["data"]["actualData"][4] + " ==> " + modif["data"]["newData"][4]
+            p= "sat : " + modif["data"]["actualData"][5] + " ==> " + modif["data"]["newData"][5]
+            p= "sun : " + modif["data"]["actualData"][6] + " ==> " + modif["data"]["newData"][6]
+          else
+            p= modif["data"]["actualData"]  + "-->" + modif["data"]["newData"]
+          #buttons
+            button.btn(type="button" id="acceptModif" place=modif["data"]["place"] modifId = modif["id"] modif = modif["data"]["modifying"] newdata = modif["data"]["newData"]) 
               span Accept
-          button.btn(type="button" id="delete" eventId = event["id"]  placeName=event["data"]['place']) 
-            span Delete
+            button.btn(type="button" id="deleteModif" modifId = modif["id"]) 
+              span Delete
   #place
     h1 Places
     input(type="text" id="placeInput" class = "textInput" placeholder="Chez nono")
     button.btn(id="generatePlaces") Valid
     #places
+  
     
 
       
