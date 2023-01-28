@@ -3,6 +3,7 @@ extends layout
 block content
   #title 
     h1 Dashboard
+    button.btn(type="button" id="exit") Exit 
   h1 Events
   #events
     if events.length == 0
@@ -20,7 +21,7 @@ block content
             if event["data"]['isVerified'] ==0
               button.btn(type="button" id="accept" value=event["id"]) 
                 span Accept
-            button.btn(type="button" id="delete" eventId = event["id"]  placeName=event["data"]['place']) 
+            button.btn(type="button" id="delete" eventId = event["id"]  placeName=event["data"]['place'] imagePath=event["data"]['image']) 
               span Delete
   h1 Modifs
   #modifs

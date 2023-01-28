@@ -1,10 +1,11 @@
 var express = require('express')
 const { collection, query, where, getDocs } = require('firebase/firestore')
+const { authenticateToken } = require('../controller/authenticate')
 var router = express.Router()
 const { signin} = require('../controller/userController')
 
 /* GET home page. */
-router.get('/index', function (req, res, next) {
+router.get('/dashboard', authenticateToken, function (req, res, next) {
 
   getDocs(collection(global.db, 'events')).then((querySnapshot) => {
     var dataEvents = []
