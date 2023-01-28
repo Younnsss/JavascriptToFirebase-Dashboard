@@ -7,6 +7,7 @@ var logger = require('morgan');
 
 const { getFirestore} = require('firebase/firestore')
 const { initializeApp } = require('firebase/app')
+const { getStorage } = require('firebase/storage')
 
 const firebaseApp = initializeApp({
   apiKey: 'AIzaSyDCXnIqJfN4-T_2dDaRjfonKDvAZw726Fg',
@@ -17,6 +18,7 @@ const firebaseApp = initializeApp({
   appId: '1:213562738067:web:0ab599bf10ee5df44b1466',
 })
 global.db = getFirestore(firebaseApp)
+global.sto = getStorage(firebaseApp)
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -53,5 +55,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
 
 module.exports = app;
