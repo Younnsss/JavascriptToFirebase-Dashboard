@@ -3,12 +3,13 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node app.js",
-    "devstart": "SET DEBUG=myapp:* & nodemon app.js"
+    "start": "node -r dotenv/config app.js",
+    "devstart": "SET DEBUG=myapp:* & nodemon -r dotenv/config app.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "firebase": "^9.15.0",
     "http-errors": "~1.6.3",

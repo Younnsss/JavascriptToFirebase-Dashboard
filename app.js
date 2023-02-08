@@ -10,12 +10,12 @@ const { initializeApp } = require('firebase/app')
 const { getStorage } = require('firebase/storage')
 
 const firebaseApp = initializeApp({
-  apiKey: 'AIzaSyDCXnIqJfN4-T_2dDaRjfonKDvAZw726Fg',
-  authDomain: 'pe-a22-6f100.firebaseapp.com',
-  projectId: 'pe-a22-6f100',
-  storageBucket: 'pe-a22-6f100.appspot.com',
-  messagingSenderId: '213562738067',
-  appId: '1:213562738067:web:0ab599bf10ee5df44b1466',
+  apiKey: process.env.API_KEY,
+  authDomain: process.env.AUTH_DOMAIN,
+  projectId: process.env.PROJECT_ID,
+  storageBucket: process.env.STORAGE_BUCKET,
+  messagingSenderId: process.env.MESSAGING_SENDER_ID,
+  appId: process.env.APP_ID,
 })
 global.db = getFirestore(firebaseApp)
 global.sto = getStorage(firebaseApp)

@@ -15,18 +15,7 @@ const { authenticateToken } = require('../controller/authenticate')
 
 var router = express.Router()
 
-var dataPlaces = []
-getDocs(collection(global.db, 'places')).then((querySnapshot) => {
-  querySnapshot.forEach((doc) => {
-    dataPlaces.push({
-      id: doc.id,
-      data: doc.data()['title'],
-    })
-  })
-})
-
-
-router.post('/accept',authenticateToken, function (req, res, next) {
+router.post('/accept', authenticateToken, function (req, res, next) {
   console.log(req)
   const docu = doc(db, 'events', req.body['id'])
   updateDoc(docu, {
@@ -40,7 +29,7 @@ router.post('/accept',authenticateToken, function (req, res, next) {
     })
 })
 
-router.post('/deleteModif',authenticateToken, function (req, res, next) {
+router.post('/deleteModif', authenticateToken, function (req, res, next) {
   const docu = doc(db, 'modifs', req.body['id'])
   deleteDoc(docu)
     .then(function () {
@@ -51,7 +40,7 @@ router.post('/deleteModif',authenticateToken, function (req, res, next) {
     })
 })
 
-router.post('/acceptModif',authenticateToken, async function (req, res, next) {
+router.post('/acceptModif', authenticateToken, async function (req, res, next) {
   const q = query(
     collection(global.db, 'places'),
     where('title', '==', req.body['place']),
@@ -79,7 +68,7 @@ router.post('/acceptModif',authenticateToken, async function (req, res, next) {
   })
 })
 
-router.post('/delete',authenticateToken, async function (req, res, next) {
+router.post('/delete', authenticateToken, async function (req, res, next) {
   const docu = doc(global.db, 'events', req.body['id'])
   const q = query(
     collection(global.db, 'places'),
@@ -118,16 +107,25 @@ router.post('/delete',authenticateToken, async function (req, res, next) {
 })
 
 router.post('/valid', authenticateToken, function (req, res, next) {
-  var p = ''
-  for (let place of dataPlaces)
-    if (place['data'].toLowerCase().includes(req.body['id'].toLowerCase()))
-      p +=
-        "<div class = 'p'> <h2>" +
-        place['data'] +
-        '</h2> <h3> ' +
-        place['id'] +
-        ' </h3> </div>'
-  res.send({ response: p })
+  var dataPlaces = []
+  getDocs(collection(global.db, 'places')).then((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+      dataPlaces.push({
+        id: doc.id,
+        data: doc.data()['title'],
+      })
+    })
+    var p = ''
+    for (let place of dataPlaces)
+      if (place['data'].toLowerCase().includes(req.body['id'].toLowerCase()))
+        p +=
+          "<div class = 'p'> <h2>" +
+          place['data'] +
+          '</h2> <h3> ' +
+          place['id'] +
+          ' </h3> </div>'
+    res.send({ response: p })
+  })
 })
 
 module.exports = router
