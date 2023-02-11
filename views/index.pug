@@ -11,12 +11,21 @@ block content
     else
       each event in events
         #event
-          h2= event["data"]['title']
-          h3= event["id"]
-          p= event["data"]['description']
-          p= event["data"]['image']
-          p= event["data"]['date'] + " - " +  event["data"]['time']
-          p= event["data"]['place'] + " : " + "[lattitude : " + event["data"]['latitude'] + ", longitude : " + event["data"]['longitude'] + "]"
+          #info 
+            h2= event["data"]['title']
+            h3= "( " + event["id"] + " )"
+          h2= event["data"]['description']
+          // add a calendar icon
+          #infos
+            #info 
+              <i class="fa fa-image"></i>
+              p= event["data"]['image']
+            #info 
+              <i class="fa fa-calendar"></i> 
+              p= event["data"]['date'] + " - " +  event["data"]['time']
+            #info
+              <i class="fa fa-map-marker"></i>
+              p= event["data"]['place'] 
           #buttons
             if event["data"]['isVerified'] ==0
               button.btn(type="button" id="accept" value=event["id"]) 
@@ -40,7 +49,7 @@ block content
             p= "sat : " + modif["data"]["actualData"][5] + " ==> " + modif["data"]["newData"][5]
             p= "sun : " + modif["data"]["actualData"][6] + " ==> " + modif["data"]["newData"][6]
           else
-            p= modif["data"]["actualData"]  + "-->" + modif["data"]["newData"]
+            p= modif["data"]["actualData"]  + " --> " + modif["data"]["newData"]
           #buttons
             button.btn(type="button" id="acceptModif" place=modif["data"]["place"] modifId = modif["id"] modif = modif["data"]["modifying"] newdata = modif["data"]["newData"]) 
               span Accept
