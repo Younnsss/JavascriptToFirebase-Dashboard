@@ -9,7 +9,8 @@ This is a NodeJs web app, Firebase operations are made using Javascript
 ![App Screenshot](./readme/overview.PNG)
 
 ## Features
-
+- JSON Web Token authentication
+![App Screenshot](./readme/login.PNG)
 - Accept an event entered by a user or delete it
 ![App Screenshot](./readme/events.PNG)
 - Accept a modification suggested by a user or delete it
