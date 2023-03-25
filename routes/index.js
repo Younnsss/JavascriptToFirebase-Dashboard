@@ -32,6 +32,10 @@ router.get('/', function (req, res, next) {
   res.render('login')
 })
 
+router.get('/privacy', function (req, res, next) {
+  res.render('privacy')
+})
+
 router.post('/signin', signin)
 
 module.exports = router
